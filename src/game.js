@@ -1197,7 +1197,7 @@ class BattleScene extends Phaser.Scene {
     const shade = this.add.rectangle(0, 0, 640, 360, 0x050304, 0.76);
     const panel = this.add.rectangle(0, 0, 420, 170, 0x180c0f, 0.96)
       .setStrokeStyle(2, 0xe3c26a, 0.85);
-    const title = this.add.text(0, -42, victory ? "Демократия отстояна" : "Славяна увели", {
+    const title = this.add.text(0, -42, victory ? "Вы отстояли демократию!" : "Славяна увели", {
       fontFamily: "monospace",
       fontSize: "24px",
       color: victory ? "#fff2d2" : "#ffd0d0",
@@ -1205,7 +1205,7 @@ class BattleScene extends Phaser.Scene {
     }).setOrigin(0.5);
     const body = this.add.text(0, 0,
       victory
-        ? "Предмет мебели и дальняя поддержка удержали зал.\nБитва прожита заново."
+        ? "Жители Кутузовской области надолго запомнят\nваш героизм!"
         : "Оборона рухнула. Нужны новые Стулья,\nлучший тайминг и платить больше денег Вайнштейну.",
       {
         fontFamily: "monospace",
