@@ -19,10 +19,10 @@ const INTRO_TEXT =
 const SLAVYAN_SLOGANS = [
   "Демократия устоит!",
   "Нашу мебель не сломить!",
-  "Свобода заседаний неприкосновенна!",
+  "Маркелов, нам нужны боеприпасы!",
   "Законный представитель не сдается!",
   "Мебель держит линию свободы!",
-  "Донатьте Вайнштейну больше шеккелей!",
+  "Увеличьте финансирование Вайнштейна!",
 ];
 
 class RetroSfx {
@@ -636,7 +636,7 @@ class BattleScene extends Phaser.Scene {
       targets: this.slavyanSpeech,
       alpha: 0,
       y: this.slavyanSpeech.y - 10,
-      duration: 3600,
+      duration: 4400,
       ease: "Quad.Out",
     });
   }
