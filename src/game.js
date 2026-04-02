@@ -15,6 +15,14 @@ const INTRO_TEXT =
   "И только предмет мебели встал между ними.\n\n" +
   "У вас есть возможность увидеть, как произошла та битва.";
 
+const SLAVYAN_SLOGANS = [
+  "Демократия устоит!",
+  "Народный мандат не сломить!",
+  "Свобода заседаний неприкосновенна!",
+  "Законный представитель не сдается!",
+  "Мебель держит линию свободы!",
+];
+
 class RetroSfx {
   constructor() {
     const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
@@ -151,7 +159,7 @@ const UNIT_DEFS = {
     sheet: "prosecutor_sheet",
   },
   guard: {
-    name: "Гвардия",
+    name: "ФСВНГ",
     kind: "attacker",
     hp: 165,
     damage: 22,
@@ -550,6 +558,76 @@ class BattleScene extends Phaser.Scene {
       spriteKey: UNIT_DEFS.slavyan.sprite,
     });
     this.slavyan.sprite.play("slavyan-idle");
+    this.createSlavyanSpeech();
+    this.startSlavyanSlogans();
+  }
+
+  createSlavyanSpeech() {
+    this.slavyanSloganIndex = 0;
+    this.slavyanSpeech = this.add.container(SLAVYAN_X + 108, SLAVYAN_Y - 82)
+      .setDepth(9)
+      .setAlpha(0);
+
+    const bubble = this.add.rectangle(0, 0, 210, 34, 0x1a0f11, 0.95)
+      .setStrokeStyle(1, 0xf0d992, 0.8);
+    const tail = this.add.triangle(-70, 16, 0, 0, 10, 0, 3, 10, 0x1a0f11, 0.95)
+      .setStrokeStyle(1, 0xf0d992, 0.8)
+      .setAngle(-18);
+    const label = this.add.text(0, 0, "", {
+      fontFamily: "monospace",
+      fontSize: "10px",
+      color: "#fff2d2",
+      align: "center",
+      wordWrap: { width: 186, useAdvancedWrap: true },
+    }).setOrigin(0.5);
+
+    this.slavyanSpeech.add([bubble, tail, label]);
+    this.slavyanSpeech.bubble = bubble;
+    this.slavyanSpeech.tail = tail;
+    this.slavyanSpeech.label = label;
+  }
+
+  startSlavyanSlogans() {
+    this.time.addEvent({
+      delay: 10000,
+      loop: true,
+      callback: () => {
+        if (this.isFinished || !this.slavyan?.alive) {
+          return;
+        }
+
+        this.showSlavyanSlogan();
+      },
+    });
+  }
+
+  showSlavyanSlogan() {
+    if (!this.slavyanSpeech) {
+      return;
+    }
+
+    const slogan = SLAVYAN_SLOGANS[this.slavyanSloganIndex % SLAVYAN_SLOGANS.length];
+    this.slavyanSloganIndex += 1;
+
+    this.slavyanSpeech.label.setText(slogan);
+    const bounds = this.slavyanSpeech.label.getBounds();
+    const width = Math.max(154, Math.ceil(bounds.width) + 18);
+    const height = Math.max(28, Math.ceil(bounds.height) + 12);
+
+    this.slavyanSpeech.bubble.setSize(width, height);
+    this.slavyanSpeech.tail.setPosition((-width * 0.36), (height * 0.5) - 2);
+    this.slavyanSpeech.label.setPosition(0, 0);
+    this.slavyanSpeech.setAlpha(1);
+    this.slavyanSpeech.y = SLAVYAN_Y - 82;
+
+    this.tweens.killTweensOf(this.slavyanSpeech);
+    this.tweens.add({
+      targets: this.slavyanSpeech,
+      alpha: 0,
+      y: this.slavyanSpeech.y - 10,
+      duration: 2600,
+      ease: "Quad.Out",
+    });
   }
 
   createPlacementPreview() {
