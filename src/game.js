@@ -569,28 +569,33 @@ class BattleScene extends Phaser.Scene {
       .setDepth(9)
       .setAlpha(0);
 
-    const bubble = this.add.rectangle(0, 0, 210, 34, 0x1a0f11, 0.95)
+    const bubble = this.add.ellipse(0, 0, 216, 48, 0x1a0f11, 0.95)
+      .setStrokeStyle(2, 0xf0d992, 0.8);
+    const tailLarge = this.add.circle(-66, 14, 8, 0x1a0f11, 0.95)
+      .setStrokeStyle(2, 0xf0d992, 0.8);
+    const tailMid = this.add.circle(-82, 22, 5, 0x1a0f11, 0.95)
+      .setStrokeStyle(2, 0xf0d992, 0.8);
+    const tailSmall = this.add.circle(-94, 30, 3, 0x1a0f11, 0.95)
       .setStrokeStyle(1, 0xf0d992, 0.8);
-    const tail = this.add.triangle(-70, 16, 0, 0, 10, 0, 3, 10, 0x1a0f11, 0.95)
-      .setStrokeStyle(1, 0xf0d992, 0.8)
-      .setAngle(-18);
     const label = this.add.text(0, 0, "", {
       fontFamily: "monospace",
       fontSize: "10px",
       color: "#fff2d2",
       align: "center",
-      wordWrap: { width: 186, useAdvancedWrap: true },
+      wordWrap: { width: 176, useAdvancedWrap: true },
     }).setOrigin(0.5);
 
-    this.slavyanSpeech.add([bubble, tail, label]);
+    this.slavyanSpeech.add([bubble, tailLarge, tailMid, tailSmall, label]);
     this.slavyanSpeech.bubble = bubble;
-    this.slavyanSpeech.tail = tail;
+    this.slavyanSpeech.tailLarge = tailLarge;
+    this.slavyanSpeech.tailMid = tailMid;
+    this.slavyanSpeech.tailSmall = tailSmall;
     this.slavyanSpeech.label = label;
   }
 
   startSlavyanSlogans() {
     this.time.addEvent({
-      delay: 10000,
+      delay: 6000,
       loop: true,
       callback: () => {
         if (this.isFinished || !this.slavyan?.alive) {
@@ -610,13 +615,17 @@ class BattleScene extends Phaser.Scene {
     const slogan = SLAVYAN_SLOGANS[this.slavyanSloganIndex % SLAVYAN_SLOGANS.length];
     this.slavyanSloganIndex += 1;
 
+    this.slavyanSpeech.label.setWordWrapWidth(204, true);
     this.slavyanSpeech.label.setText(slogan);
     const bounds = this.slavyanSpeech.label.getBounds();
-    const width = Math.max(154, Math.ceil(bounds.width) + 18);
-    const height = Math.max(28, Math.ceil(bounds.height) + 12);
+    const width = Math.max(168, Math.ceil(bounds.width) + 34);
+    const height = Math.max(42, Math.ceil(bounds.height) + 24);
 
-    this.slavyanSpeech.bubble.setSize(width, height);
-    this.slavyanSpeech.tail.setPosition((-width * 0.36), (height * 0.5) - 2);
+    this.slavyanSpeech.label.setWordWrapWidth(width - 28, true);
+    this.slavyanSpeech.bubble.setDisplaySize(width, height);
+    this.slavyanSpeech.tailLarge.setPosition((-width * 0.34), (height * 0.28));
+    this.slavyanSpeech.tailMid.setPosition((-width * 0.45), (height * 0.43));
+    this.slavyanSpeech.tailSmall.setPosition((-width * 0.56), (height * 0.58));
     this.slavyanSpeech.label.setPosition(0, 0);
     this.slavyanSpeech.setAlpha(1);
     this.slavyanSpeech.y = SLAVYAN_Y - 82;
