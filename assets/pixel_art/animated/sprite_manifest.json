@@ -1,0 +1,72 @@
+﻿{
+    "frameWidth":  64,
+    "frameHeight":  64,
+    "frameCount":  6,
+    "frameOrder":  [
+                       "idle_0",
+                       "idle_1",
+                       "move_0",
+                       "move_1",
+                       "attack_0",
+                       "hit_0"
+                   ],
+    "animations":  {
+                       "idle":  {
+                                    "repeat":  -1,
+                                    "frames":  [
+                                                   0,
+                                                   1
+                                               ],
+                                    "frameRate":  3
+                                },
+                       "move":  {
+                                    "repeat":  -1,
+                                    "frames":  [
+                                                   2,
+                                                   3
+                                               ],
+                                    "frameRate":  6
+                                },
+                       "attack":  {
+                                      "repeat":  0,
+                                      "frames":  [
+                                                     4
+                                                 ],
+                                      "frameRate":  10
+                                  },
+                       "hit":  {
+                                   "repeat":  0,
+                                   "frames":  [
+                                                  5
+                                              ],
+                                   "frameRate":  10
+                               }
+                   },
+    "units":  {
+                  "slavyan":  {
+                                  "facing":  "right",
+                                  "file":  "slavyan_sheet.png",
+                                  "role":  "goal"
+                              },
+                  "weinstein":  {
+                                    "facing":  "right",
+                                    "file":  "weinstein_sheet.png",
+                                    "role":  "ranged"
+                                },
+                  "chair":  {
+                                "facing":  "right",
+                                "file":  "chair_sheet.png",
+                                "role":  "tank"
+                            },
+                  "prosecutor":  {
+                                     "facing":  "left",
+                                     "file":  "prosecutor_sheet.png",
+                                     "role":  "attacker"
+                                 },
+                  "guard":  {
+                                "facing":  "left",
+                                "file":  "guard_sheet.png",
+                                "role":  "attacker"
+                            }
+              }
+}
