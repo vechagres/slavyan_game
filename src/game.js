@@ -635,7 +635,7 @@ class BattleScene extends Phaser.Scene {
       targets: this.slavyanSpeech,
       alpha: 0,
       y: this.slavyanSpeech.y - 10,
-      duration: 2600,
+      duration: 3600,
       ease: "Quad.Out",
     });
   }
