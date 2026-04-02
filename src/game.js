@@ -7,6 +7,7 @@ const ENEMY_SPAWN_X = 612;
 const SLAVYAN_X = 74;
 const SLAVYAN_Y = 280;
 const GRID_HOVER_COLOR = 0xf0d992;
+const POST_WAVE_GAPS = [9200, 9800, 10400, 6200];
 const INTRO_TEXT =
   "Свобода не достается просто так.\n\n" +
   "За свободу надо бороться. Одна из таких битв произошла 02.04.2026, когда во время " +
@@ -689,23 +690,23 @@ class BattleScene extends Phaser.Scene {
     this.waves = [
       [
         { lane: 0, type: "prosecutor", delay: 0 },
-        { lane: 1, type: "prosecutor", delay: 1200 },
-        { lane: 2, type: "guard", delay: 2800 },
+        { lane: 1, type: "prosecutor", delay: 2200 },
+        { lane: 2, type: "guard", delay: 5200 },
       ],
       [
         { lane: 2, type: "prosecutor", delay: 0 },
-        { lane: 1, type: "prosecutor", delay: 900 },
-        { lane: 0, type: "guard", delay: 2400 },
-        { lane: 2, type: "prosecutor", delay: 3400 },
-        { lane: 1, type: "guard", delay: 4400 },
+        { lane: 1, type: "prosecutor", delay: 1800 },
+        { lane: 0, type: "guard", delay: 4200 },
+        { lane: 2, type: "prosecutor", delay: 6600 },
+        { lane: 1, type: "guard", delay: 9200 },
       ],
       [
         { lane: 2, type: "guard", delay: 0 },
-        { lane: 1, type: "prosecutor", delay: 650 },
-        { lane: 0, type: "prosecutor", delay: 1250 },
-        { lane: 1, type: "guard", delay: 2600 },
-        { lane: 2, type: "prosecutor", delay: 3100 },
-        { lane: 2, type: "guard", delay: 4400 },
+        { lane: 1, type: "prosecutor", delay: 1700 },
+        { lane: 0, type: "prosecutor", delay: 3400 },
+        { lane: 1, type: "guard", delay: 5600 },
+        { lane: 2, type: "prosecutor", delay: 7800 },
+        { lane: 2, type: "guard", delay: 10400 },
       ],
       [
         { lane: 0, type: "guard", delay: 0 },
@@ -744,7 +745,8 @@ class BattleScene extends Phaser.Scene {
     this.waveIndex += 1;
 
     if (this.waveIndex < this.waves.length) {
-      this.time.delayedCall(lastDelay + 6200, () => this.launchNextWave());
+      const gapAfterWave = POST_WAVE_GAPS[waveNumber - 1] ?? 6200;
+      this.time.delayedCall(lastDelay + gapAfterWave, () => this.launchNextWave());
     }
   }
 
